@@ -5,17 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "transaction")
+@Entity
 public class Transaction {
     
-    public Transaction(BigDecimal amount, TransactionType transactionType, String description, Timestamp transactionTimestamp, String createUserId){
+    public Transaction(BigDecimal amount, TransactionType transactionType, String description, LocalDateTime transactionTimestamp, String createUserId){
         this.amount = amount;
         this.transactionType = transactionType;
         this.description = description;
@@ -23,13 +25,16 @@ public class Transaction {
         this.createUserId = createUserId;
     }
     
-    BigDecimal amount;
-    TransactionType transactionType;
-    String description;
-    Timestamp transactionTimestamp;
-    Timestamp createdTimestamp;
-    Timestamp lastUpdatedTimestamp;
-    String createUserId;
-    String lastUpdateUserId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer transactionId;
+    private BigDecimal amount;
+    private TransactionType transactionType;
+    private String description;
+    private LocalDateTime transactionTimestamp;
+    private LocalDateTime createdTimestamp;
+    private LocalDateTime lastUpdatedTimestamp;
+    private String createUserId;
+    private String lastUpdateUserId;
     
 }
